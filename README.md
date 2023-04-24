@@ -2,6 +2,8 @@
 
 Collection of functions to work with the MEDDRA.org api to code and classify adverse events in clinical trials.
 
+The MEDDRA API is well documented in their developer documentation available once an account is created and on their public (swagger website)[https://mapisbx.meddra.org/index.html]. To use the swagger website you do need to have an account.
+
 While working with this API, I was unable to find any example code to work with the API in R so publishing this in order to hopefully save others the headache.
 
 What these functions offer is a mechanism to construct a valid json submission to the api. Other functions required that a json file be constructed externally and sent.
