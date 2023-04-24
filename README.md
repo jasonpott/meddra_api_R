@@ -34,6 +34,41 @@ meddra_api_status <- function(){
 
 ```
 
+### Identify the ontology level of an unknown MEDDRA code e.g. PT, LLT
+
+This does not require authentication
+
+```r
+
+check_meddra_term_level <- function(medra_code) {
+  term_level <- suppressMessages(
+    httr::content(httr::GET(
+      url = paste(
+        "https://mapisbx.meddra.org/api/hist",
+        medra_code,
+        1,
+        "English",
+        "Release",
+        sep = "/"
+      ),
+      httr::add_headers(
+        "accept" = "application/json",
+        "Content-Type" = "text/json",
+        "Authorization" = paste("Bearer", token)
+      )
+    ),
+    "text") %>%
+      jsonlite::fromJSON() %>%
+      # obtaining the term level from the latest version of MEDDRA
+      dplyr::arrange(desc(medDraVer)) %>%
+      dplyr::slice(1) %>%
+      dplyr::select(termLevel)
+  )
+  return(term_level$termLevel)
+}
+
+```
+
 ### Obtain MEDRA authentication token
 
 This function requires that the used has a registration with the MEDDRA service and has obtained an API key
@@ -103,25 +138,27 @@ This function needs to have a logical evaluation of the term level implemented u
 
 ```r
 
+meddra_obtain_label <- function(medra_code){
+
  json_output <- list(
-      bview = unbox("SOC"),
-      rsview = unbox("Release"),
-      code = unbox(0),
-      pcode = unbox(0),
-      syncode = unbox(0),
-      lltcode = unbox(0),
-      ptcode = unbox(medra_code),
-      hltcode = unbox(0),
-      hlgtcode = unbox(0),
-      soccode = unbox(0),
-      smqcode = unbox(0),
-      type = unbox("PT"),
+      bview = jsonlite::unbox("SOC"),
+      rsview = jsonlite::unbox("Release"),
+      code = jsonlite::unbox(0),
+      pcode = jsonlite::unbox(0),
+      syncode = jsonlite::unbox(0),
+      lltcode = jsonlite::unbox(0),
+      ptcode = jsonlite::unbox(medra_code),
+      hltcode = jsonlite::unbox(0),
+      hlgtcode = jsonlite::unbox(0),
+      soccode = jsonlite::unbox(0),
+      smqcode = jsonlite::unbox(0),
+      type = jsonlite::unbox("PT"),
       addlangs = list(),
-      rtype = unbox("M"),
-      lang = unbox("English"),
-      ver = unbox(20.1),
-      kana = unbox(FALSE),
-      separator = unbox(0)
+      rtype = jsonlite::unbox("M"),
+      lang = jsonlite::unbox("English"),
+      ver = jsonlite::unbox(20.1),
+      kana = jsonlite::unbox(FALSE),
+      separator = jsonlite::unbox(0)
     ) %>% jsonlite::toJSON()
 
    url <- "https://mapisbx.meddra.org/api/type"
@@ -159,24 +196,24 @@ This function repeats the label methods but extracts and returns the SOC this co
 meddra_obtain_soc <- function(medra_code){
 
   json_output <- list(
-    bview = unbox("SOC"),
-    rsview = unbox("Release"),
-    code = unbox(0),
-    pcode = unbox(0),
-    syncode = unbox(0),
-    lltcode = unbox(0),
-    ptcode = unbox(medra_code),
-    hltcode = unbox(0),
-    hlgtcode = unbox(0),
-    soccode = unbox(0),
-    smqcode = unbox(0),
-    type = unbox("PT"),
+    bview = jsonlite::unbox("SOC"),
+    rsview = jsonlite::unbox("Release"),
+    code = jsonlite::unbox(0),
+    pcode = jsonlite::unbox(0),
+    syncode = jsonlite::unbox(0),
+    lltcode = jsonlite::unbox(0),
+    ptcode = jsonlite::unbox(medra_code),
+    hltcode = jsonlite::unbox(0),
+    hlgtcode = jsonlite::unbox(0),
+    soccode = jsonlite::unbox(0),
+    smqcode = jsonlite::unbox(0),
+    type = jsonlite::unbox("PT"),
     addlangs = list(),
-    rtype = unbox("M"),
-    lang = unbox("English"),
-    ver = unbox(20.1),
-    kana = unbox(FALSE),
-    separator = unbox(0)
+    rtype = jsonlite::unbox("M"),
+    lang = jsonlite::unbox("English"),
+    ver = jsonlite::unbox(20.1),
+    kana = jsonlite::unbox(FALSE),
+    separator = jsonlite::unbox(0)
   ) %>% jsonlite::toJSON()
 
   url <- "https://mapisbx.meddra.org/api/type"
