@@ -2,7 +2,9 @@
 
 Collection of functions to work with the MEDDRA.org api to code and classify adverse events in clinical trials.
 
-While working with this API I was unable to find any example code to work with the API in R so publishing this in order to hopefully save others the headache.
+While working with this API, I was unable to find any example code to work with the API in R so publishing this in order to hopefully save others the headache.
+
+What these functions offer is a mechanism to construct a valid json submission to the api. Other functions required that a json file be constructed externally and sent.
 
 ## Dependancies
 The functions used here make use of functions from:
@@ -16,6 +18,19 @@ The [dmtools](https://github.com/KonstantinRyabov/dmtools/tree/62d753239cf54eb6b
 
 
 ### API status
+
+This function does not require authentication.
+
+```
+meddra_api_status <- function(){
+  api_status <- content(GET(url = "https://mapisbx.meddra.org/api/status",
+                            add_headers(accept = "*/*")),
+                        "text")
+
+  print(api_status, quote = FALSE )
+}
+
+```
 
 ### Obtain MEDRA authentication token
 
