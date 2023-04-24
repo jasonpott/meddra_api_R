@@ -21,7 +21,7 @@ The [dmtools](https://github.com/KonstantinRyabov/dmtools/tree/62d753239cf54eb6b
 
 This function does not require authentication.
 
-```
+```r
 meddra_api_status <- function(){
   api_status <- content(GET(url = "https://mapisbx.meddra.org/api/status",
                             add_headers(accept = "*/*")),
@@ -36,7 +36,7 @@ meddra_api_status <- function(){
 
 This function requires that the used has a registration with the MEDDRA service and has obtained an API key
 
-```
+```r
 meddra_obtain_token <- function(){
 
   url <- 'https://mid.meddra.org/connect/token'
@@ -65,7 +65,7 @@ token <- meddra_obtain_token()
 
 This function requires that the token has been obtained using the meddra_obtain_token function above and assigned to token
 
-```
+```r
 
 check_meddra_term_level <- function(medra_code) {
   term_level <- suppressMessages(
@@ -99,7 +99,7 @@ check_meddra_term_level <- function(medra_code) {
 
 This function needs to have a logical evaluation of the term level implemented using the check_meddra_term_level function above to correctly create the json model submission
 
-```
+```r
 
  json_output <- list(
       bview = unbox("SOC"),
@@ -153,7 +153,7 @@ This function needs to have a logical evaluation of the term level implemented u
 
 This function repeats the label methods but extracts and returns the SOC this could be encorporated into a function argument
 
-```
+```r
 meddra_obtain_soc <- function(medra_code){
 
   json_output <- list(
